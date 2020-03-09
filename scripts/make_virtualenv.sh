@@ -13,4 +13,4 @@ mkdir -p $base/venvs
 virtualenv -p python3 $base/venvs/torch3
 
 echo "To activate your environment:"
-echo "    source $base/venvs/sockeye3/bin/activate"
+echo "    source $base/venvs/torch3/bin/activate"

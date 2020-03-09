@@ -4,29 +4,22 @@ scripts=`dirname "$0"`
 base=$scripts/..
 
 data=$base/data
+configs=$base/configs
+
 translations=$base/translations
 
 mkdir -p $translations
 
-src=de
-trg=en
+src=en
+trg=de
 
 # cloned from https://github.com/bricksdont/moses-scripts
 MOSES=$base/tools/moses-scripts/scripts
 
-model_name=model_wmt17
 num_threads=6
+device=5
 
-##########################################
-
-OMP_NUM_THREADS=$num_threads python -m sockeye.translate \
-				-i $data/test.bpe.$src \
-				-o $translations/test.bpe.$model_name.$trg \
-				-m $base/models/$model_name \
-				--beam-size 10 \
-				--length-penalty-alpha 1.0 \
-				--use-cpu \
-				--batch-size 100
+CUDA_VISIBLE_DEVICES=$device OMP_NUM_THREADS=$num_threads python -m joeynmt translate $configs/transformer_wmt17_ende.yaml < $data/test.bpe.$src > $translations/test.bpe.$model_name.$trg
 
 # undo BPE
 
