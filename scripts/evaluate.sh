@@ -19,6 +19,8 @@ MOSES=$base/tools/moses-scripts/scripts
 num_threads=6
 device=5
 
+model_name=transformer_wmt17_ende
+
 CUDA_VISIBLE_DEVICES=$device OMP_NUM_THREADS=$num_threads python -m joeynmt translate $configs/transformer_wmt17_ende.yaml < $data/test.bpe.$src > $translations/test.bpe.$model_name.$trg
 
 # undo BPE
