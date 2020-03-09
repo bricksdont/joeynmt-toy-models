@@ -11,4 +11,4 @@ mkdir -p $models
 num_threads=6
 device=5
 
-CUDA_VISIBLE_DEVICES=$device OMP_NUM_THREADS=$num_threads python -m joeynmt train $configs/transformer_wmt17_ende.yaml
+(cd $base && CUDA_VISIBLE_DEVICES=$device OMP_NUM_THREADS=$num_threads python -m joeynmt train $configs/transformer_wmt17_ende.yaml)
