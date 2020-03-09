@@ -9,9 +9,8 @@ data:
     level: "bpe"
     lowercase: False
     max_sent_length: 100
-    # try building vocabulary with input data
-    # src_vocab: "shared_models/vocab.txt"
-    # trg_vocab: "shared_models/vocab.txt"
+    src_vocab: "shared_models/vocab.txt"
+    trg_vocab: "shared_models/vocab.txt"
 
 testing:
     beam_size: 5

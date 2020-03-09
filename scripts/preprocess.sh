@@ -4,6 +4,7 @@ scripts=`dirname "$0"`
 base=$scripts/..
 
 data=$base/data
+tools=$base/tools
 
 mkdir -p $base/shared_models
 
@@ -11,20 +12,18 @@ src=de
 trg=en
 
 # cloned from https://github.com/bricksdont/moses-scripts
-MOSES=$base/tools/moses-scripts/scripts
+MOSES=$tools/moses-scripts/scripts
 
 bpe_num_operations=30000
 bpe_vocab_threshold=50
-
-TMP=/var/tmp
 
 #################################################################
 
 # input files are preprocessed already up to truecasing
 
 for corpus in train dev test; do
-    ln -s $corpus.$src $data/$corpus.truecased.$src
-    ln -s $corpus.$trg $data/$corpus.truecased.$trg
+    ln -snf $corpus.$src $data/$corpus.truecased.$src
+    ln -snf $corpus.$trg $data/$corpus.truecased.$trg
 done
 
 # remove preprocessing for target language test data, for evaluation
@@ -45,11 +44,16 @@ for corpus in train dev test; do
 	subword-nmt apply-bpe -c $base/shared_models/$src$trg.bpe --vocabulary $base/shared_models/vocab.$trg --vocabulary-threshold $bpe_vocab_threshold < $data/$corpus.truecased.$trg > $data/$corpus.bpe.$trg
 done
 
+# build joeynmt vocab
+python $tools/joeynmt/scripts/build_vocab.py $data/train.bpe.$src $data/train.bpe.$trg --output_path $base/shared_models/vocab.txt
+
 # file sizes
 for corpus in train dev test; do
 	echo "corpus: "$corpus
 	wc -l $data/$corpus.bpe.$src $data/$corpus.bpe.$trg
 done
+
+wc -l $base/shared_models/*
 
 # sanity checks
 
