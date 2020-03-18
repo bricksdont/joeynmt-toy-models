@@ -1,3 +1,6 @@
+# this file is taken from:
+# https://github.com/joeynmt/joeynmt/blob/master/configs/transformer_wmt17_ende.yaml
+
 name: "transformer"
 
 data:
