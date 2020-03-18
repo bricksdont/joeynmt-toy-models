@@ -9,7 +9,6 @@ mkdir -p $tools
 echo "Make sure this script is executed AFTER you have activated a virtualenv"
 
 # install joeynmt
-# also installs torch CU correct version for rattle
 
 git clone https://github.com/joeynmt/joeynmt.git $tools/joeynmt
 
