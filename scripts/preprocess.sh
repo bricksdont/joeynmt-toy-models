@@ -8,8 +8,8 @@ tools=$base/tools
 
 mkdir -p $base/shared_models
 
-src=de
-trg=en
+src=en
+trg=de
 
 # cloned from https://github.com/bricksdont/moses-scripts
 MOSES=$tools/moses-scripts/scripts
@@ -20,11 +20,6 @@ bpe_vocab_threshold=50
 #################################################################
 
 # input files are preprocessed already up to truecasing
-
-for corpus in train dev test; do
-    ln -snf $corpus.$src $data/$corpus.truecased.$src
-    ln -snf $corpus.$trg $data/$corpus.truecased.$trg
-done
 
 # remove preprocessing for target language test data, for evaluation
 
