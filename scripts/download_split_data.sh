@@ -12,8 +12,10 @@ wget http://data.statmt.org/wmt17/translation-task/preprocessed/de-en/corpus.tc.
 wget http://data.statmt.org/wmt17/translation-task/preprocessed/de-en/corpus.tc.en.gz -P $data
 wget http://data.statmt.org/wmt17/translation-task/preprocessed/de-en/dev.tgz -P $data
 
-cat $data/corpus.tc.de.gz | gunzip -c - > $data/train.truecased.de
-cat $data/corpus.tc.en.gz | gunzip -c - > $data/train.truecased.en
+train_size=100000
+
+cat $data/corpus.tc.de.gz | gunzip -c - | head -n $train_size > $data/train.truecased.de
+cat $data/corpus.tc.en.gz | gunzip -c - | head -n $train_size > $data/train.truecased.en
 
 tar -xzvf $data/dev.tgz -C $data/dev
 

@@ -19,11 +19,11 @@ MOSES=$base/tools/moses-scripts/scripts
 num_threads=6
 device=5
 
-model_name=transformer_wmt17_ende
+model_name=rnn_wmt17_ende
 
-CUDA_VISIBLE_DEVICES=$device OMP_NUM_THREADS=$num_threads python -m joeynmt translate $configs/transformer_wmt17_ende.yaml < $data/test.bpe.$src > $translations/test.bpe.$model_name.$trg
+CUDA_VISIBLE_DEVICES=$device OMP_NUM_THREADS=$num_threads python -m joeynmt translate $configs/rnn_wmt17_ende.yaml < $data/test.bpe.$src > $translations/test.bpe.$model_name.$trg
 
-# undo BPE
+# undo BPE (this does not do anything: https://github.com/joeynmt/joeynmt/issues/91)
 
 cat $translations/test.bpe.$model_name.$trg | sed 's/\@\@ //g' > $translations/test.truecased.$model_name.$trg
 
@@ -38,4 +38,3 @@ cat $translations/test.tokenized.$model_name.$trg | $MOSES/tokenizer/detokenizer
 # compute case-sensitive BLEU on detokenized data
 
 cat $translations/test.$model_name.$trg | sacrebleu $data/test.$trg
-		
