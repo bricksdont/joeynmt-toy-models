@@ -14,8 +14,8 @@ trg=de
 # cloned from https://github.com/bricksdont/moses-scripts
 MOSES=$tools/moses-scripts/scripts
 
-bpe_num_operations=30000
-bpe_vocab_threshold=50
+bpe_num_operations=20000
+bpe_vocab_threshold=10
 
 #################################################################
 

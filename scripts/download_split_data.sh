@@ -8,8 +8,14 @@ data=$base/data
 mkdir -p $data
 mkdir -p $data/dev
 
-wget http://data.statmt.org/wmt17/translation-task/preprocessed/de-en/corpus.tc.de.gz -P $data
-wget http://data.statmt.org/wmt17/translation-task/preprocessed/de-en/corpus.tc.en.gz -P $data
+if [[ ! -f $data/corpus.tc.de.gz ]]; then
+  wget http://data.statmt.org/wmt17/translation-task/preprocessed/de-en/corpus.tc.de.gz -P $data
+fi
+
+if [[ ! -f $data/corpus.tc.en.gz ]]; then
+  wget http://data.statmt.org/wmt17/translation-task/preprocessed/de-en/corpus.tc.en.gz -P $data
+fi
+
 wget http://data.statmt.org/wmt17/translation-task/preprocessed/de-en/dev.tgz -P $data
 
 train_size=100000
