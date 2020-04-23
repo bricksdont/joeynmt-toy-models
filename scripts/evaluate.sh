@@ -19,22 +19,28 @@ MOSES=$base/tools/moses-scripts/scripts
 num_threads=6
 device=5
 
-model_name=rnn_wmt17_ende
 
-CUDA_VISIBLE_DEVICES=$device OMP_NUM_THREADS=$num_threads python -m joeynmt translate $configs/rnn_wmt17_ende.yaml < $data/test.bpe.$src > $translations/test.bpe.$model_name.$trg
+for model_name in rnn_wmt17_ende rnn_attaverage_wmt17_ende rnn_attlast_wmt17_ende; do
 
-# undo BPE (this does not do anything: https://github.com/joeynmt/joeynmt/issues/91)
+    echo "###############################################################################"
+    echo "model_name $model_name"
 
-cat $translations/test.bpe.$model_name.$trg | sed 's/\@\@ //g' > $translations/test.truecased.$model_name.$trg
+    CUDA_VISIBLE_DEVICES=$device OMP_NUM_THREADS=$num_threads python -m joeynmt translate $configs/$model_name.yaml < $data/test.bpe.$src > $translations/test.bpe.$model_name.$trg
 
-# undo truecasing
+    # undo BPE (this does not do anything: https://github.com/joeynmt/joeynmt/issues/91)
 
-cat $translations/test.truecased.$model_name.$trg | $MOSES/recaser/detruecase.perl > $translations/test.tokenized.$model_name.$trg
+    cat $translations/test.bpe.$model_name.$trg | sed 's/\@\@ //g' > $translations/test.truecased.$model_name.$trg
 
-# undo tokenization
+    # undo truecasing
 
-cat $translations/test.tokenized.$model_name.$trg | $MOSES/tokenizer/detokenizer.perl -l $trg > $translations/test.$model_name.$trg
+    cat $translations/test.truecased.$model_name.$trg | $MOSES/recaser/detruecase.perl > $translations/test.tokenized.$model_name.$trg
 
-# compute case-sensitive BLEU on detokenized data
+    # undo tokenization
 
-cat $translations/test.$model_name.$trg | sacrebleu $data/test.$trg
+    cat $translations/test.tokenized.$model_name.$trg | $MOSES/tokenizer/detokenizer.perl -l $trg > $translations/test.$model_name.$trg
+
+    # compute case-sensitive BLEU on detokenized data
+
+    cat $translations/test.$model_name.$trg | sacrebleu $data/test.$trg
+
+done
