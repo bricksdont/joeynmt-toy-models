@@ -10,9 +10,9 @@ echo "Make sure this script is executed AFTER you have activated a virtualenv"
 
 # install joeynmt
 
-git clone https://github.com/joeynmt/joeynmt.git $tools/joeynmt
+git clone https://github.com/bricksdont/joeynmt.git $tools/joeynmt
 
-(cd $tools/joeynmt && pip install .)
+(cd $tools/joeynmt && git checkout dummy_att && pip install .)
 
 # install Moses scripts for preprocessing
 
