@@ -59,7 +59,7 @@ def main():
         conll_lines = read_connl(conll_handle)
 
     src_lines = open(args.src_input, "r").readlines()
-    trg_lines = open(args.src_input, "r").readlines()
+    trg_lines = open(args.trg_input, "r").readlines()
 
     num_lines = len(src_lines)
     assert num_lines >= args.size
