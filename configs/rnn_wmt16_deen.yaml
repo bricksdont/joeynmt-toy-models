@@ -11,7 +11,7 @@ data:
     test:  "data/test.bpe"
     level: "bpe"
     lowercase: False
-    max_sent_length: 80
+    max_sent_length: 100
     src_vocab: "shared_models/vocab.txt"
     trg_vocab: "shared_models/vocab.txt"
 
@@ -22,8 +22,9 @@ testing:
 training:
     optimizer: "adam"
     normalization: "tokens"
-    learning_rate: 0.0002
-    batch_size: 80
+    learning_rate: 0.0003
+    batch_size: 2048
+    batch_type: "token"
     scheduling: "plateau"
     patience: 8
     weight_decay: 0.0
@@ -37,7 +38,7 @@ training:
     overwrite: False
     shuffle: True
     use_cuda: False
-    max_output_length: 80
+    max_output_length: 100
     print_valid_sents: [0, 1, 2, 3, 4]
 
 model:
