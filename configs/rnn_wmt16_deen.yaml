@@ -25,6 +25,8 @@ training:
     learning_rate: 0.0003
     batch_size: 2048
     batch_type: "token"
+    eval_batch_size: 1024
+    eval_batch_type: "token"
     scheduling: "plateau"
     patience: 8
     weight_decay: 0.0
@@ -40,10 +42,11 @@ training:
     use_cuda: False
     max_output_length: 100
     print_valid_sents: [0, 1, 2, 3, 4]
+    label_smoothing: 0.1
 
 model:
     tied_embeddings: True
-    tied_softmax: True
+    tied_softmax: False
     encoder:
         rnn_type: "gru"
         embeddings:
