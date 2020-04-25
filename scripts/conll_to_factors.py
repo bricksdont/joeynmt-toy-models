@@ -95,6 +95,7 @@ conll_file = open(sys.argv[2])
 conll_sentences = read_sentences(conll_file)
 
 for line in bpe_file:
+  state = "O"
   i = 0
   sentence = next(conll_sentences)
   for word in line.split():
