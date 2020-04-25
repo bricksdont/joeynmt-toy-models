@@ -1,11 +1,11 @@
 # this file is adapted from:
 # https://github.com/joeynmt/joeynmt/blob/master/configs/iwslt14_deen_bpe.yaml
 
-name: "rnn"
+name: "rnn_wmt16_factors_deen"
 
 data:
-    src: "en"
-    trg: "de"
+    src: "de"
+    trg: "en"
     train: "data/train.bpe"
     dev:   "data/dev.bpe"
     test:  "data/test.bpe"
@@ -14,6 +14,8 @@ data:
     max_sent_length: 80
     src_vocab: "shared_models/vocab.txt"
     trg_vocab: "shared_models/vocab.txt"
+    factor_vocab: "shared_models/vocab.factor"
+    use_factor: True
 
 testing:
     beam_size: 5
@@ -30,10 +32,10 @@ training:
     decrease_factor: 0.7
     early_stopping_metric: "ppl"
     epochs: 100
-    validation_freq: 2000
-    logging_freq: 500
+    validation_freq: 500
+    logging_freq: 100
     eval_metric: "bleu"
-    model_dir: "models/wmt17_ende_rnn_attaverage"
+    model_dir: "models/rnn_wmt16_factors_deen"
     overwrite: False
     shuffle: True
     use_cuda: False
@@ -45,23 +47,26 @@ model:
     tied_softmax: True
     encoder:
         rnn_type: "gru"
-        embeddings:
-            embedding_dim: 620
+        factor_embeddings:
+            embedding_dim: 32
             scale: False
-        hidden_size: 500
+        embeddings:
+            embedding_dim: 512
+            scale: False
+        hidden_size: 512
         bidirectional: True
-        dropout: 0.0
+        dropout: 0.3
         num_layers: 1
     decoder:
         rnn_type: "gru"
         embeddings:
-            embedding_dim: 620
+            embedding_dim: 512
             scale: False
         emb_scale: False
-        hidden_size: 1000
-        dropout: 0.0
-        hidden_dropout: 0.2
+        hidden_size: 512
+        dropout: 0.3
+        hidden_dropout: 0.5
         num_layers: 1
         input_feeding: True
         init_hidden: "bridge"
-        attention: "average"
+        attention: "bahdanau"

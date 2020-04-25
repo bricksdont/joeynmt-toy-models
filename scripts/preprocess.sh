@@ -8,18 +8,34 @@ tools=$base/tools
 
 mkdir -p $base/shared_models
 
-src=en
-trg=de
+src=de
+trg=en
 
 # cloned from https://github.com/bricksdont/moses-scripts
 MOSES=$tools/moses-scripts/scripts
 
-bpe_num_operations=20000
+bpe_num_operations=2000
 bpe_vocab_threshold=10
 
 #################################################################
 
-# input files are preprocessed already up to truecasing
+# measure time
+
+SECONDS=0
+
+# dev and test input files are preprocessed already up to truecasing
+
+# train set does need to be truecased: learn truecase model on train (learn one model for each language)
+
+$MOSES/recaser/train-truecaser.perl -corpus $data/train.tokenized.$src -model $base/shared_models/truecase-model.$src
+$MOSES/recaser/train-truecaser.perl -corpus $data/train.tokenized.$trg -model $base/shared_models/truecase-model.$trg
+
+# apply truecase model to train, test and dev
+
+for corpus in train; do
+	$MOSES/recaser/truecase.perl -model $base/shared_models/truecase-model.$src < $data/$corpus.tokenized.$src > $data/$corpus.truecased.$src
+	$MOSES/recaser/truecase.perl -model $base/shared_models/truecase-model.$trg < $data/$corpus.tokenized.$trg > $data/$corpus.truecased.$trg
+done
 
 # remove preprocessing for target language test data, for evaluation
 
@@ -39,10 +55,22 @@ for corpus in train dev test; do
 	subword-nmt apply-bpe -c $base/shared_models/$src$trg.bpe --vocabulary $base/shared_models/vocab.$trg --vocabulary-threshold $bpe_vocab_threshold < $data/$corpus.truecased.$trg > $data/$corpus.bpe.$trg
 done
 
+# generate factors for BPE versions of corpora
+
+for corpus in train dev test; do
+  python $scripts/conll_to_factors.py $data/$corpus.conll.$src > $data/$corpus.factor
+done
+
 # build joeynmt vocab
+
 python $tools/joeynmt/scripts/build_vocab.py $data/train.bpe.$src $data/train.bpe.$trg --output_path $base/shared_models/vocab.txt
 
+# build joeynmt factor vocab
+
+python $tools/joeynmt/scripts/build_vocab.py $data/train.factor --output_path $base/shared_models/vocab.factor
+
 # file sizes
+
 for corpus in train dev test; do
 	echo "corpus: "$corpus
 	wc -l $data/$corpus.bpe.$src $data/$corpus.bpe.$trg
@@ -53,3 +81,6 @@ wc -l $base/shared_models/*
 # sanity checks
 
 echo "At this point, please check that 1) file sizes are as expected, 2) languages are correct and 3) material is still parallel"
+
+echo "time taken:"
+echo "$SECONDS seconds"

@@ -15,8 +15,7 @@ device=5
 
 SECONDS=0
 
-
-CUDA_VISIBLE_DEVICES=$device OMP_NUM_THREADS=$num_threads python -m joeynmt train $configs/rnn_wmt17_ende.yaml
+CUDA_VISIBLE_DEVICES=$device OMP_NUM_THREADS=$num_threads python -m joeynmt train $configs/rnn_wmt16_deen.yaml
 
 echo "time taken:"
 echo "$SECONDS seconds"

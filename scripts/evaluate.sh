@@ -10,8 +10,8 @@ translations=$base/translations
 
 mkdir -p $translations
 
-src=en
-trg=de
+src=de
+trg=en
 
 # cloned from https://github.com/bricksdont/moses-scripts
 MOSES=$base/tools/moses-scripts/scripts
@@ -20,7 +20,7 @@ num_threads=6
 device=5
 
 
-for model_name in rnn_wmt17_ende rnn_attaverage_wmt17_ende rnn_attlast_wmt17_ende; do
+for model_name in rnn_wmt16_deen; do
 
     echo "###############################################################################"
     echo "model_name $model_name"
