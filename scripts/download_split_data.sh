@@ -36,7 +36,11 @@ fi
 
 # development and test data (preprocessed already up to truecasing)
 
-wget http://data.statmt.org/wmt17/translation-task/preprocessed/de-en/dev.tgz -P $data
+mkdir -p $data/dev
+
+if [[ ! -f $data/dev/dev.tgz ]]; then
+  wget http://data.statmt.org/wmt17/translation-task/preprocessed/de-en/dev.tgz -P $data/dev
+fi
 
 tar -xzvf $data/dev.tgz -C $data/dev
 

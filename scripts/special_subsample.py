@@ -67,7 +67,7 @@ def main():
     random_indexes = random.sample(range(num_lines), args.size)
 
     with open(args.src_output, "w") as src_handle, open(args.conll_output, "w") as conll_handle, \
-         open(args.trg_output) as trg_handle:
+         open(args.trg_output, "w") as trg_handle:
 
         for random_index in random_indexes:
 
