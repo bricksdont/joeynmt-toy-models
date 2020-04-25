@@ -23,18 +23,30 @@ bpe_vocab_threshold=10
 
 SECONDS=0
 
-# dev and test input files are preprocessed already up to truecasing
-
 # train set does need to be truecased: learn truecase model on train (learn one model for each language)
 
 $MOSES/recaser/train-truecaser.perl -corpus $data/train.tokenized.$src -model $base/shared_models/truecase-model.$src
 $MOSES/recaser/train-truecaser.perl -corpus $data/train.tokenized.$trg -model $base/shared_models/truecase-model.$trg
+
+# dev and test input files are preprocessed already up to truecasing, but: tokenization needs to be identical to CONLL files, extract source from CONLL:
+
+for corpus in dev test; do
+  cut -f 2 $data/$corpus.conll.$src | \
+    awk -v RS="" '{$1=$1}7' | \
+    $MOSES/scripts/tokenizer/escape-special-chars.perl -l $src > $data/$corpus.tokenized.$src
+done
 
 # apply truecase model to train, test and dev
 
 for corpus in train; do
 	$MOSES/recaser/truecase.perl -model $base/shared_models/truecase-model.$src < $data/$corpus.tokenized.$src > $data/$corpus.truecased.$src
 	$MOSES/recaser/truecase.perl -model $base/shared_models/truecase-model.$trg < $data/$corpus.tokenized.$trg > $data/$corpus.truecased.$trg
+done
+
+# apply truecase model to source side of dev and test
+
+for corpus in dev test; do
+	$MOSES/recaser/truecase.perl -model $base/shared_models/truecase-model.$src < $data/$corpus.tokenized.$src > $data/$corpus.truecased.$src
 done
 
 # remove preprocessing for target language test data, for evaluation
