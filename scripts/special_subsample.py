@@ -57,10 +57,6 @@ def main():
 
     random_indexes = random.sample(range(num_lines), args.size)
 
-    random_indexes_set = set(random_indexes)
-
-    assert len(random_indexes) == len(random_indexes_set)
-
     with open(args.src_input, "r") as src_input_handle, open(args.src_output, "w") as src_output_handle:
         src_lines = src_input_handle.readlines()
 
@@ -81,9 +77,11 @@ def main():
 
     with open(args.conll_input, "r") as conll_input_handle, open(args.conll_output, "w") as conll_output_handle:
 
-        for index, conll_line in enumerate(read_connl_lines(conll_input_handle)):
-            if index in random_indexes_set:
-                write_conll_line(conll_line, conll_output_handle)
+        conll_lines = list(read_connl_lines(conll_input_handle))
+
+        for random_index in random_indexes:
+            conll_line = conll_lines[random_index]
+            write_conll_line(conll_line, conll_output_handle)
 
 
 if __name__ == '__main__':
