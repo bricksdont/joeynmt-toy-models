@@ -82,10 +82,10 @@ def read_sentences(fobj):
 def get_factors(sentence, idx):
 
     try:
-        word = sentence[idx]
+       word = sentence[idx]
     except IndexError:
        sys.stderr.write("sentence: %s, idx: %d" % (str(sentence), i))
-        raise
+       raise
 
     factors = [word.lemma]
 
