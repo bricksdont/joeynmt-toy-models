@@ -58,7 +58,7 @@ done
 # generate factors for BPE versions of corpora
 
 for corpus in train dev test; do
-  python $scripts/conll_to_factors.py $data/$corpus.conll.$src > $data/$corpus.factor
+  python $scripts/conll_to_factors.py $data/$corpus.bpe.$src $data/$corpus.conll.$src > $data/$corpus.factor
 done
 
 # build joeynmt vocab
