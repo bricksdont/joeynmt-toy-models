@@ -64,12 +64,16 @@ def main():
             src_line = src_lines[random_index]
             src_output_handle.write(src_line)
 
+    del src_lines
+
     with open(args.trg_input, "r") as trg_input_handle, open(args.trg_output, "w") as trg_output_handle:
         trg_lines = trg_input_handle.readlines()
 
         for random_index in random_indexes:
             trg_line = trg_lines[random_index]
             trg_output_handle.write(trg_line)
+
+    del trg_lines
 
     with open(args.conll_input, "r") as conll_input_handle, open(args.conll_output, "w") as conll_output_handle:
 
