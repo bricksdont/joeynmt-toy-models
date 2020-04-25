@@ -22,7 +22,7 @@ fi
 
 # complicated way of subsampling and shuffling, because parses are one word per line
 
-train_size=50000
+train_size=10000
 
 python $scripts/special_subsample.py --src-input $data/data.statmt.org/rsennrich/wmt16_factors/de-en/corpus.parallel.tok.de \
     --conll-input $data/data.statmt.org/rsennrich/wmt16_factors/de-en/corpus.parallel.conll.de \
