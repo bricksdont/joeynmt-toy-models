@@ -99,5 +99,16 @@ for line in bpe_file:
   sentence = next(conll_sentences)
   for word in line.split():
     factors = get_factors(sentence, i)
+    if word.endswith('@@'):
+        if state == "O" or state == "E":
+            state = "B"
+        elif state == "B" or state == "I":
+            state = "I"
+    else:
+        i += 1
+        if state == "B" or state == "I":
+            state = "E"
+        else:
+            state = "O"
     sys.stdout.write(''.join(factors) + ' ')
   sys.stdout.write('\n')
