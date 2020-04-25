@@ -24,29 +24,23 @@ def parse_args():
     return args
 
 
-def read_connl(handle):
-
-    lines = []
+def read_connl_lines(handle):
 
     current_words = []
 
     for word in handle:
 
         if word == "\n":
-            lines.append(current_words)
+            yield current_words
             current_words = []
         else:
             current_words.append(word)
 
-    return lines
 
-
-def write_conll(lines, handle):
-
-    for line in lines:
-        for word in line:
-            handle.write(word)
-        handle.write("\n")
+def write_conll_line(line, handle):
+    for word in line:
+        handle.write(word)
+    handle.write("\n")
 
 
 def main():
@@ -58,29 +52,26 @@ def main():
 
     random.seed(args.seed)
 
-    with open(args.conll_input, "r") as conll_handle:
-        conll_lines = read_connl(conll_handle)
-
-    src_lines = open(args.src_input, "r").readlines()
-    trg_lines = open(args.trg_input, "r").readlines()
-
-    num_lines = len(src_lines)
+    num_lines = sum(1 for _ in open(args.src_input, "r"))
     assert num_lines >= args.size
 
     random_indexes = random.sample(range(num_lines), args.size)
 
-    with open(args.src_output, "w") as src_handle, open(args.conll_output, "w") as conll_handle, \
-         open(args.trg_output, "w") as trg_handle:
+    with open(args.src_input, "r") as src_input_handle, open(args.src_output, "w") as src_output_handle:
+        for index, src_line in enumerate(src_input_handle):
+            if index in random_indexes:
+                src_output_handle.write(src_line)
 
-        for random_index in random_indexes:
+    with open(args.trg_input, "r") as trg_input_handle, open(args.trg_output, "w") as trg_output_handle:
+        for index, trg_line in enumerate(trg_input_handle):
+            if index in random_indexes:
+                trg_output_handle.write(trg_line)
 
-            src_line = src_lines[random_index]
-            trg_line = trg_lines[random_index]
-            conll_line = conll_lines[random_index]
+    with open(args.conll_input, "r") as conll_input_handle, open(args.conll_output, "w") as conll_output_handle:
 
-            src_handle.write(src_line)
-            trg_handle.write(trg_line)
-            write_conll(conll_line, conll_handle)
+        for index, conll_line in enumerate(read_connl_lines(conll_input_handle)):
+            if index in random_indexes:
+                write_conll_line(conll_line, conll_output_handle)
 
 
 if __name__ == '__main__':

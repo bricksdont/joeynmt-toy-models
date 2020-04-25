@@ -73,7 +73,7 @@ python $tools/joeynmt/scripts/build_vocab.py $data/train.factor --output_path $b
 
 for corpus in train dev test; do
 	echo "corpus: "$corpus
-	wc -l $data/$corpus.bpe.$src $data/$corpus.bpe.$trg
+	wc -l $data/$corpus.bpe.$src $data/$corpus.bpe.$trg $data/$corpus.factor
 done
 
 wc -l $base/shared_models/*
