@@ -96,7 +96,7 @@ conll_sentences = read_sentences(conll_file)
 
 for line in bpe_file:
   i = 0
-  sentence = conll_sentences.next()
+  sentence = next(conll_sentences)
   for word in line.split():
     factors = get_factors(sentence, i)
     sys.stdout.write(''.join(factors) + ' ')
