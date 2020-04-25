@@ -42,7 +42,7 @@ if [[ ! -f $data/dev/dev.tgz ]]; then
   wget http://data.statmt.org/wmt17/translation-task/preprocessed/de-en/dev.tgz -P $data/dev
 fi
 
-tar -xzvf $data/dev.tgz -C $data/dev
+tar -xzvf $data/dev/dev.tgz -C $data/dev
 
 cp $data/dev/newstest2015.tc.de $data/dev.truecased.de
 cp $data/dev/newstest2015.tc.en $data/dev.truecased.en
