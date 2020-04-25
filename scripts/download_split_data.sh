@@ -52,7 +52,7 @@ cp $data/data.statmt.org/rsennrich/wmt16_factors/de-en/newstest2016.conll.de $da
 echo "Sizes of corpora:"
 for corpus in train dev test; do
 	echo "corpus: "$corpus
-	wc -l $data/$corpus.truecased.de $data/$corpus.truecased.en
+	wc -l $data/$corpus.*
 done
 
 # sanity checks
