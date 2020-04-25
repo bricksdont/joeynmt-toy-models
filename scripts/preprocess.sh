@@ -33,7 +33,7 @@ $MOSES/recaser/train-truecaser.perl -corpus $data/train.tokenized.$trg -model $b
 for corpus in dev test; do
   cut -f 2 $data/$corpus.conll.$src | \
     awk -v RS="" '{$1=$1}7' | \
-    $MOSES/scripts/tokenizer/escape-special-chars.perl -l $src > $data/$corpus.tokenized.$src
+    $MOSES/tokenizer/escape-special-chars.perl -l $src > $data/$corpus.tokenized.$src
 done
 
 # apply truecase model to train, test and dev
