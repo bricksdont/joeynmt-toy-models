@@ -17,6 +17,7 @@ def parse_args():
     parser.add_argument("--trg-output", type=str, help="Target lines output", required=True)
 
     parser.add_argument("--size", type=int, help="Subsample to this many lines", required=True)
+    parser.add_argument("--seed", type=int, help="Random seed", required=False, default=13)
 
     args = parser.parse_args()
 
@@ -54,6 +55,8 @@ def main():
 
     logging.basicConfig(level=logging.DEBUG)
     logging.debug(args)
+
+    random.seed(args.seed)
 
     with open(args.conll_input, "r") as conll_handle:
         conll_lines = read_connl(conll_handle)
