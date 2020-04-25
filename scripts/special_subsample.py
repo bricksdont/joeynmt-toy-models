@@ -64,23 +64,20 @@ def main():
     num_lines = len(src_lines)
     assert num_lines >= args.size
 
-    all_lines = zip(src_lines, conll_lines, trg_lines)
-    random.shuffle(all_lines)
-
-    seen = 0
+    random_indexes = random.sample(range(num_lines), args.size)
 
     with open(args.src_output, "w") as src_handle, open(args.conll_output, "w") as conll_handle, \
          open(args.trg_output) as trg_handle:
 
-        for src_line, conll_line, trg_line in all_lines:
+        for random_index in random_indexes:
+
+            src_line = src_lines[random_index]
+            trg_line = trg_lines[random_index]
+            conll_line = conll_lines[random_index]
+
             src_handle.write(src_line)
             trg_handle.write(trg_line)
             write_conll(conll_line, conll_handle)
-
-            seen += 1
-
-            if seen >= args.size:
-                break
 
 
 if __name__ == '__main__':

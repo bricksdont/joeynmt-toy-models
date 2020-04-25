@@ -24,20 +24,19 @@ fi
 
 train_size=10000
 
-python $scripts/special_subsample.py --src-input $data/data.statmt.org/rsennrich/wmt16_factors/de-en/corpus.parallel.tok.de \
-    --conll-input $data/data.statmt.org/rsennrich/wmt16_factors/de-en/corpus.parallel.conll.de \
-    --trg-input $data/data.statmt.org/rsennrich/wmt16_factors/de-en/corpus.parallel.tok.en \
-    --src-output $data/train.tokenized.de \
-    --conll-output $data/train.conll.de \
-    --trg-output $data/train.tokenized.en \
-    --size $train_size
+if [[ ! -f $data/train.tokenized.de ]]; then
+  python $scripts/special_subsample.py --src-input $data/data.statmt.org/rsennrich/wmt16_factors/de-en/corpus.parallel.tok.de \
+      --conll-input $data/data.statmt.org/rsennrich/wmt16_factors/de-en/corpus.parallel.conll.de \
+      --trg-input $data/data.statmt.org/rsennrich/wmt16_factors/de-en/corpus.parallel.tok.en \
+      --src-output $data/train.tokenized.de \
+      --conll-output $data/train.conll.de \
+      --trg-output $data/train.tokenized.en \
+      --size $train_size
+fi
 
 # development and test data (preprocessed already up to truecasing)
 
 wget http://data.statmt.org/wmt17/translation-task/preprocessed/de-en/dev.tgz -P $data
-
-cat $data/corpus.tc.de.gz | gunzip -c - | head -n $train_size > $data/train.truecased.de
-cat $data/corpus.tc.en.gz | gunzip -c - | head -n $train_size > $data/train.truecased.en
 
 tar -xzvf $data/dev.tgz -C $data/dev
 
