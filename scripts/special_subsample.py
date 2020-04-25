@@ -59,21 +59,25 @@ def main():
 
     with open(args.src_input, "r") as src_input_handle, open(args.src_output, "w") as src_output_handle:
         src_lines = src_input_handle.readlines()
-        for index, src_line in enumerate(src_lines):
-            if index in random_indexes:
-                src_output_handle.write(src_line)
+
+        for random_index in random_indexes:
+            src_line = src_lines[random_index]
+            src_output_handle.write(src_line)
 
     with open(args.trg_input, "r") as trg_input_handle, open(args.trg_output, "w") as trg_output_handle:
         trg_lines = trg_input_handle.readlines()
-        for index, trg_line in enumerate(trg_lines):
-            if index in random_indexes:
-                trg_output_handle.write(trg_line)
+
+        for random_index in random_indexes:
+            trg_line = trg_lines[random_index]
+            trg_output_handle.write(trg_line)
 
     with open(args.conll_input, "r") as conll_input_handle, open(args.conll_output, "w") as conll_output_handle:
 
-        for index, conll_line in enumerate(read_connl_lines(conll_input_handle)):
-            if index in random_indexes:
-                write_conll_line(conll_line, conll_output_handle)
+        conll_lines = list(read_connl_lines(conll_input_handle))
+
+        for random_index in random_indexes:
+            conll_line = conll_lines[random_index]
+            write_conll_line(conll_line, conll_output_handle)
 
 
 if __name__ == '__main__':
