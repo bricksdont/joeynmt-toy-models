@@ -32,7 +32,7 @@ training:
     weight_decay: 0.0
     decrease_factor: 0.7
     early_stopping_metric: "ppl"
-    epochs: 100
+    epochs: 1000
     validation_freq: 500
     logging_freq: 100
     eval_metric: "bleu"
