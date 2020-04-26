@@ -24,6 +24,8 @@ fi
 
 train_size=10000
 
+# if this leads to out-of-memory on your machine, use the argument --memory-efficient
+
 if [[ ! -f $data/train.tokenized.de ]]; then
   python $scripts/special_subsample.py --src-input $data/data.statmt.org/rsennrich/wmt16_factors/de-en/corpus.parallel.tok.de \
       --conll-input $data/data.statmt.org/rsennrich/wmt16_factors/de-en/corpus.parallel.conll.de \

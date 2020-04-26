@@ -19,6 +19,9 @@ def parse_args():
     parser.add_argument("--size", type=int, help="Subsample to this many lines", required=True)
     parser.add_argument("--seed", type=int, help="Random seed", required=False, default=13)
 
+    parser.add_argument("--memory-efficient", action="store_true", help="Use less memory (much slower)",
+                        required=False, default=False)
+
     args = parser.parse_args()
 
     return args
@@ -56,6 +59,7 @@ def main():
     assert num_lines >= args.size
 
     random_indexes = random.sample(range(num_lines), args.size)
+    random_indexes.sort()
 
     with open(args.src_input, "r") as src_input_handle, open(args.src_output, "w") as src_output_handle:
         src_lines = src_input_handle.readlines()
@@ -77,11 +81,20 @@ def main():
 
     with open(args.conll_input, "r") as conll_input_handle, open(args.conll_output, "w") as conll_output_handle:
 
-        conll_lines = list(read_connl_lines(conll_input_handle))
+        if args.memory_efficient:
 
-        for random_index in random_indexes:
-            conll_line = conll_lines[random_index]
-            write_conll_line(conll_line, conll_output_handle)
+            random_indexes_set = set(random_indexes)
+
+            for index, conll_line in enumerate(read_connl_lines(conll_input_handle)):
+                if index in random_indexes_set:
+                    write_conll_line(conll_line, conll_output_handle)
+        else:
+
+            conll_lines = list(read_connl_lines(conll_input_handle))
+
+            for random_index in random_indexes:
+                conll_line = conll_lines[random_index]
+                write_conll_line(conll_line, conll_output_handle)
 
 
 if __name__ == '__main__':
