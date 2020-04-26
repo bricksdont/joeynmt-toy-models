@@ -50,19 +50,19 @@ model:
     encoder:
         rnn_type: "gru"
         embeddings:
-            embedding_dim: 256
+            embedding_dim: 512
             scale: False
-        hidden_size: 512
+        hidden_size: 1024
         bidirectional: True
         dropout: 0.3
         num_layers: 1
     decoder:
         rnn_type: "gru"
         embeddings:
-            embedding_dim: 256
+            embedding_dim: 512
             scale: False
         emb_scale: False
-        hidden_size: 512
+        hidden_size: 1024
         dropout: 0.3
         hidden_dropout: 0.5
         num_layers: 1
