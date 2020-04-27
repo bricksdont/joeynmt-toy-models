@@ -115,5 +115,5 @@ for line in bpe_file:
             state = "E"
         else:
             state = "O"
-    sys.stdout.write(''.join(factors) + ' ')
+    sys.stdout.write(''.join([str(f) for f in factors]) + ' ')
   sys.stdout.write('\n')

@@ -18,7 +18,7 @@ data:
     # factor_vocab: "shared_models/vocab.factor"
     # factor_voc_limit: 1000
     # factor_voc_min_freq: 1
-    # factor_combine: "add", "concatenate"
+    # factor_combine: "add", # or: "concatenate"
     # use_factor: True
 
 testing:
@@ -53,7 +53,7 @@ model:
         rnn_type: "gru"
         # changes for factors:
         #factor_embeddings:
-        #    embedding_dim: 32
+        #    embedding_dim: 16
         #    scale: False
         embeddings:
             embedding_dim: 512
