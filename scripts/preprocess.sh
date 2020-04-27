@@ -83,7 +83,7 @@ python $tools/joeynmt/scripts/build_vocab.py $data/train.bpe.$src $data/train.bp
 
 # build joeynmt factor vocab
 
-python $tools/joeynmt/scripts/build_vocab.py $data/train.factor --output_path $base/shared_models/vocab.factor
+python $tools/joeynmt/scripts/build_vocab.py $data/train.bpe.factor --output_path $base/shared_models/vocab.factor
 
 # file sizes
 
