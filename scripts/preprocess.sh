@@ -89,7 +89,7 @@ python $tools/joeynmt/scripts/build_vocab.py $data/train.bpe.factor --output_pat
 
 for corpus in train dev test; do
 	echo "corpus: "$corpus
-	wc -l $data/$corpus.bpe.$src $data/$corpus.bpe.$trg $data/$corpus.factor
+	wc -l $data/$corpus.bpe.$src $data/$corpus.bpe.$trg $data/$corpus.bpe.factor
 done
 
 wc -l $base/shared_models/*
