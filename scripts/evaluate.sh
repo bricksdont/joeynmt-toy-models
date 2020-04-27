@@ -32,6 +32,11 @@ for model_name in rnn_wmt16_deen; do
 
     mkdir -p $translations_sub
 
+    # translation with factors: lines in the input file have to be:
+    # source tokens ||| factor tokens
+
+    # CUDA_VISIBLE_DEVICES=$device OMP_NUM_THREADS=$num_threads python -m joeynmt translate $configs/$model_name.yaml < $data/test.combined > $translations_sub/test.bpe.$model_name.$trg
+
     CUDA_VISIBLE_DEVICES=$device OMP_NUM_THREADS=$num_threads python -m joeynmt translate $configs/$model_name.yaml < $data/test.bpe.$src > $translations_sub/test.bpe.$model_name.$trg
 
     # undo BPE (this does not do anything: https://github.com/joeynmt/joeynmt/issues/91)
