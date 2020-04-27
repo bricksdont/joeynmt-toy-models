@@ -16,9 +16,12 @@ trg=en
 # cloned from https://github.com/bricksdont/moses-scripts
 MOSES=$base/tools/moses-scripts/scripts
 
-num_threads=6
+num_threads=4
 device=5
 
+# measure time
+
+SECONDS=0
 
 for model_name in rnn_wmt16_deen; do
 
@@ -48,3 +51,7 @@ for model_name in rnn_wmt16_deen; do
     cat $translations_sub/test.$model_name.$trg | sacrebleu $data/test.$trg
 
 done
+
+echo "time taken:"
+echo "$SECONDS seconds"
+

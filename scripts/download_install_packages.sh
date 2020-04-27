@@ -12,6 +12,9 @@ echo "Make sure this script is executed AFTER you have activated a virtualenv"
 
 git clone https://github.com/bricksdont/joeynmt.git $tools/joeynmt
 
+# optional: set temp dir:
+# export TMPDIR="/var/tmp"
+
 (cd $tools/joeynmt && git checkout factors && git pull && pip install --upgrade .)
 
 # install Moses scripts for preprocessing

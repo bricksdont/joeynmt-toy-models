@@ -8,7 +8,7 @@ configs=$base/configs
 
 mkdir -p $models
 
-num_threads=6
+num_threads=4
 device=5
 
 # measure time

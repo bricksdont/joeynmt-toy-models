@@ -22,7 +22,7 @@ fi
 
 # complicated way of subsampling and shuffling, because parses are one word per line
 
-train_size=50000
+train_size=100000
 
 # if this leads to out-of-memory on your machine, use the argument --memory-efficient
 

@@ -1,7 +1,7 @@
 # this file is adapted from:
 # https://github.com/joeynmt/joeynmt/blob/master/configs/iwslt14_deen_bpe.yaml
 
-name: "rnn_wmt16_deen"
+name: "rnn_wmt16_factors_add_deen"
 
 data:
     src: "de"
@@ -14,6 +14,11 @@ data:
     max_sent_length: 100
     src_vocab: "shared_models/vocab.txt"
     trg_vocab: "shared_models/vocab.txt"
+    # changes for factors:
+    factor_vocab: "shared_models/vocab.factor"
+    factor_voc_limit: 1000
+    factor_voc_min_freq: 1
+    use_factor: True
 
 testing:
     beam_size: 5
@@ -36,7 +41,7 @@ training:
     validation_freq: 500
     logging_freq: 100
     eval_metric: "bleu"
-    model_dir: "models/rnn_wmt16_deen"
+    model_dir: "models/rnn_wmt16_factors_add_deen"
     overwrite: False
     shuffle: True
     use_cuda: False
@@ -49,8 +54,13 @@ model:
     tied_softmax: False
     encoder:
         rnn_type: "gru"
+        # changes for factors:
+        factor_embeddings:
+            embedding_dim: 256
+            scale: False
+        factor_combine: "add", # or: "concatenate"
         embeddings:
-            embedding_dim: 512
+            embedding_dim: 256
             scale: False
         hidden_size: 1024
         bidirectional: True
@@ -59,7 +69,7 @@ model:
     decoder:
         rnn_type: "gru"
         embeddings:
-            embedding_dim: 512
+            embedding_dim: 256
             scale: False
         emb_scale: False
         hidden_size: 1024
