@@ -14,8 +14,12 @@ data:
     max_sent_length: 80
     src_vocab: "shared_models/vocab.txt"
     trg_vocab: "shared_models/vocab.txt"
-    factor_vocab: "shared_models/vocab.factor"
-    use_factor: True
+    # changes for factors:
+    # factor_vocab: "shared_models/vocab.factor"
+    # factor_voc_limit: 1000
+    # factor_voc_min_freq: 1
+    # factor_combine: "add", "concatenate"
+    # use_factor: True
 
 testing:
     beam_size: 5
@@ -47,9 +51,10 @@ model:
     tied_softmax: True
     encoder:
         rnn_type: "gru"
-        factor_embeddings:
-            embedding_dim: 32
-            scale: False
+        # changes for factors:
+        #factor_embeddings:
+        #    embedding_dim: 32
+        #    scale: False
         embeddings:
             embedding_dim: 512
             scale: False

@@ -54,7 +54,7 @@ model:
             scale: False
         hidden_size: 1024
         bidirectional: True
-        dropout: 0.3
+        dropout: 0.1
         num_layers: 1
     decoder:
         rnn_type: "gru"
@@ -63,8 +63,8 @@ model:
             scale: False
         emb_scale: False
         hidden_size: 1024
-        dropout: 0.3
-        hidden_dropout: 0.5
+        dropout: 0.1
+        hidden_dropout: 0.1
         num_layers: 1
         input_feeding: True
         init_hidden: "bridge"

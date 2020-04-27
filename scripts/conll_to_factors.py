@@ -87,7 +87,7 @@ def get_factors(sentence, idx):
        sys.stderr.write("sentence: %s, idx: %d" % (str(sentence), i))
        raise
 
-    factors = [word.lemma]
+    factors = [word.pos]
 
     return factors
 
