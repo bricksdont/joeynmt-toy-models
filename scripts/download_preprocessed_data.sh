@@ -11,10 +11,14 @@ shared_models=$base/shared_models
 wget https://files.ifi.uzh.ch/cl/archiv/2020/mt20/data.tar.gz -P $base
 tar -xzvf $base/data.tar.gz
 
+rm $base/data.tar.gz
+
 # download shared models (truecasing and BPE model, vocabulary files)
 
 wget https://files.ifi.uzh.ch/cl/archiv/2020/mt20/shared_models.tar.gz -P $base
 tar -xzvf $base/shared_models.tar.gz
+
+rm $base/shared_models.tar.gz
 
 # sizes
 echo "Sizes of data files:"
