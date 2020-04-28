@@ -12,10 +12,15 @@ echo "Make sure this script is executed AFTER you have activated a virtualenv"
 
 git clone https://github.com/bricksdont/joeynmt.git $tools/joeynmt
 
-# optional: set temp dir:
-# export TMPDIR="/var/tmp"
+# if necessary: first check out the correct branch:
 
-(cd $tools/joeynmt && git checkout factors && git pull && pip install --upgrade .)
+# (cd $tools/joeynmt && git checkout [correct branch name] && git pull)
+
+(cd $tools/joeynmt && pip install --upgrade .)
+
+# fix torch version, for reproducibility
+
+pip install --upgrade torch==1.4.0
 
 # install Moses scripts for preprocessing
 
