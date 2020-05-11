@@ -11,6 +11,8 @@ mkdir -p $data
 
 . $scripts/prepare-iwslt17-multilingual.sh
 
+mv $base/iwslt17_orig $data/raw
+
 # sizes
 echo "Sizes of corpora:"
 for corpus in train dev test; do
