@@ -1,6 +1,3 @@
-# this file is adapted from:
-# https://github.com/joeynmt/joeynmt/blob/master/configs/iwslt14_deen_bpe.yaml
-
 name: "low_resource_example"
 
 data:
@@ -12,11 +9,15 @@ data:
     level: "?"
     lowercase: False
     max_sent_length: 100
+    # either use a vocabulary limit:
+    src_voc_limit: ?
+    trg_voc_limit: ?
+    # or (= not both!) a file with a vocabulary built before starting the training:
     src_vocab: "?"
     trg_vocab: "?"
 
 testing:
-    beam_size: "?"
+    beam_size: ?
     alpha: 1.0
 
 training:
@@ -45,8 +46,8 @@ training:
     label_smoothing: 0.1
 
 model:
-    tied_embeddings: True
-    tied_softmax: True
+    tied_embeddings: False
+    tied_softmax: False
     encoder:
         rnn_type: "gru"
         embeddings:
