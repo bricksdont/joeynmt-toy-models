@@ -14,7 +14,7 @@ git clone https://github.com/bricksdont/joeynmt.git $tools/joeynmt
 
 # if necessary: first check out the correct branch:
 
-# (cd $tools/joeynmt && git checkout [correct branch name] && git pull)
+(cd $tools/joeynmt && git checkout factors_complete && git pull)
 
 (cd $tools/joeynmt && pip install --upgrade .)
 
