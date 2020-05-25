@@ -13,10 +13,11 @@ data, train and evaluate models.
 
 # Steps
 
-Clone this repository in the desired place:
+Clone this repository in the desired place and check out the correct branch:
 
     git clone https://github.com/bricksdont/joeynmt-toy-models
     cd joeynmt-toy-models
+    checkout ex4
 
 Create a new virtualenv that uses Python 3. Please make sure to run this command outside of any virtual Python environment:
 
