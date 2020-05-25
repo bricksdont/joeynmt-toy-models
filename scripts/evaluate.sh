@@ -25,7 +25,7 @@ SECONDS=0
 
 # baseline
 
-for model_name in rnn_wmt16_deen; do
+for model_name in rnn_wmt16_deen_tying rnn_wmt16_deen_notying; do
 
     echo "###############################################################################"
     echo "model_name $model_name"
@@ -33,11 +33,6 @@ for model_name in rnn_wmt16_deen; do
     translations_sub=$translations/$model_name
 
     mkdir -p $translations_sub
-
-    # translation with factors: lines in the input file have to be:
-    # source tokens ||| factor tokens
-
-    # CUDA_VISIBLE_DEVICES=$device OMP_NUM_THREADS=$num_threads python -m joeynmt translate $configs/$model_name.yaml < $data/test.combined > $translations_sub/test.bpe.$model_name.$trg
 
     CUDA_VISIBLE_DEVICES=$device OMP_NUM_THREADS=$num_threads python -m joeynmt translate $configs/$model_name.yaml < $data/test.bpe.$src > $translations_sub/test.bpe.$model_name.$trg
 
@@ -61,7 +56,7 @@ done
 
 # factor models
 
-for model_name in rnn_wmt16_factors_add_deen rnn_wmt16_factors_concatenate_deen; do
+for model_name in rnn_wmt16_factors_add_deen_tying rnn_wmt16_factors_concatenate_deen_tying rnn_wmt16_factors_add_deen_notying rnn_wmt16_factors_concatenate_deen_notying; do
 
     echo "###############################################################################"
     echo "model_name $model_name"

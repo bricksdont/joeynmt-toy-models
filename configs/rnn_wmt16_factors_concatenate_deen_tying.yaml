@@ -1,7 +1,7 @@
 # this file is adapted from:
 # https://github.com/joeynmt/joeynmt/blob/master/configs/iwslt14_deen_bpe.yaml
 
-name: "rnn_wmt16_factors_add_deen"
+name: "rnn_wmt16_factors_concatenate_deen_tying"
 
 data:
     src: "de"
@@ -41,10 +41,10 @@ training:
     validation_freq: 500
     logging_freq: 100
     eval_metric: "bleu"
-    model_dir: "models/rnn_wmt16_factors_add_deen"
-    overwrite: False
+    model_dir: "models/rnn_wmt16_factors_concatenate_deen_tying"
+    overwrite: True
     shuffle: True
-    use_cuda: False
+    use_cuda: True
     max_output_length: 100
     print_valid_sents: [0, 1, 2, 3, 4]
     label_smoothing: 0.1
@@ -56,11 +56,11 @@ model:
         rnn_type: "gru"
         # changes for factors:
         factor_embeddings:
-            embedding_dim: 512
+            embedding_dim: 12
             scale: False
-        factor_combine: "add" # or: "concatenate"
+        factor_combine: "concatenate" # or: "add"
         embeddings:
-            embedding_dim: 512
+            embedding_dim: 500
             scale: False
         hidden_size: 1024
         bidirectional: True
