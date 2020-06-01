@@ -30,7 +30,7 @@ echo "model_name $model_name"
 config=$configs/$model_name.yaml
 
 for beam_size in {1..10}; do
-    cat $config | sed "s/beam_size: 10/beam_size: $beam_size/g" > $model_name.$beam_size.yaml
+    cat $config | sed "s/beam_size: 10/beam_size: $beam_size/g" > $configs/$model_name.$beam_size.yaml
 
 
     echo "###############################################################################"
@@ -40,7 +40,7 @@ for beam_size in {1..10}; do
 
     mkdir -p $translations_sub
 
-    CUDA_VISIBLE_DEVICES=$device OMP_NUM_THREADS=$num_threads python -m joeynmt translate $model_name.$beam_size.yaml < $data/test.bpe1.$src > $translations_sub/test.bpe.$model_name.$trg
+    CUDA_VISIBLE_DEVICES=$device OMP_NUM_THREADS=$num_threads python -m joeynmt translate $configs/$model_name.$beam_size.yaml < $data/test.bpe1.$src > $translations_sub/test.bpe.$model_name.$trg
 
     # undo BPE (this does not do anything: https://github.com/joeynmt/joeynmt/issues/91)
 
