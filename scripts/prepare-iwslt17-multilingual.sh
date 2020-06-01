@@ -76,7 +76,7 @@ for SRC in "${LANGS[@]}"; do
     done
 done
 
-echo "pre-processing dev data..."
+echo "pre-processing valid data..."
 
 # sample file name: IWSLT17.TED.dev2010.ro-it.ro.xml
 
@@ -88,7 +88,7 @@ for SRC in "${LANGS[@]}"; do
                 | sed -e 's/<seg id="[0-9]*">\s*//g' \
                 | sed -e 's/\s*<\/seg>\s*//g' \
                 | sed -e "s/\’/\'/g" \
-                > "$DATA/dev.${SRC}-${TRG}.${LANG}"
+                > "$DATA/valid.${SRC}-${TRG}.${LANG}"
             done
         fi
     done

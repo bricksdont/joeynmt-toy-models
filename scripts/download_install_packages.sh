@@ -12,6 +12,8 @@ echo "Make sure this script is executed AFTER you have activated a virtualenv"
 
 git clone https://github.com/bricksdont/joeynmt.git $tools/joeynmt
 
+export TMPDIR=/var/tmp
+
 (cd $tools/joeynmt && pip install --upgrade .)
 
 # fix torch version, for reproducibility

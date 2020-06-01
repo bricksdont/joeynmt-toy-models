@@ -1,22 +1,19 @@
-# this file is adapted from:
-# https://github.com/joeynmt/joeynmt/blob/master/configs/iwslt14_deen_bpe.yaml
-
-name: "low_resource_example"
+name: "bpe_2k"
 
 data:
-    src: "?"
-    trg: "?"
-    train: "?"
-    dev:   "?"
-    test:  "?"
-    level: "?"
+    src: "de"
+    trg: "it"
+    train: "data/train.bpe1"
+    dev:   "data/dev.bpe1"
+    test:  "data/test.bpe1"
+    level: "bpe"
     lowercase: False
     max_sent_length: 100
-    src_vocab: "?"
-    trg_vocab: "?"
+    src_vocab: "shared_models/vocab.joeynmt.bpe_2k"
+    trg_vocab: "shared_models/vocab.joeynmt.bpe_2k"
 
 testing:
-    beam_size: "?"
+    beam_size: 10
     alpha: 1.0
 
 training:
@@ -36,17 +33,17 @@ training:
     validation_freq: 500
     logging_freq: 100
     eval_metric: "bleu"
-    model_dir: "?"
-    overwrite: False
+    model_dir: "models/bpe_2k"
+    overwrite: True
     shuffle: True
-    use_cuda: False
+    use_cuda: True
     max_output_length: 100
     print_valid_sents: [0, 1, 2, 3, 4]
     label_smoothing: 0.1
 
 model:
-    tied_embeddings: True
-    tied_softmax: True
+    tied_embeddings: False
+    tied_softmax: False
     encoder:
         rnn_type: "gru"
         embeddings:
@@ -69,3 +66,4 @@ model:
         input_feeding: True
         init_hidden: "bridge"
         attention: "bahdanau"
+
