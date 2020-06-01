@@ -15,7 +15,6 @@ trg=it
 # cloned from https://github.com/bricksdont/moses-scripts
 MOSES=$base/tools/moses-scripts/scripts
 
-word_vocab_size_per_language=1000
 bpe_num_operations_1=2000
 bpe_num_operations_2=4000
 bpe_vocab_threshold=10
@@ -27,8 +26,8 @@ head -n 100000 $data/train.$src-$trg.$trg > $data/train.$trg
 
 # link dev and test files
 
-ln -snf $data/valid.$src-$trg.$src $data/dev.$src
-ln -snf $data/valid.$src-$trg.$trg $data/dev.$trg
+ln -snf $data/dev.$src-$trg.$src $data/dev.$src
+ln -snf $data/dev.$src-$trg.$trg $data/dev.$trg
 
 ln -snf $data/test.$src-$trg.$src $data/test.$src
 ln -snf $data/test.$src-$trg.$trg $data/test.$trg
