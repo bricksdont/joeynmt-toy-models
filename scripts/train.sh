@@ -5,24 +5,19 @@ base=$scripts/..
 
 models=$base/models
 configs=$base/configs
+logs=$base/logs
 
 mkdir -p $models
+mkdir -p $logs
 
 num_threads=4
-device=4
 
-# measure time
-
-SECONDS=0
-
-for model_name in bpe_2k bpe_4k; do
-
-  if [[ -f $configs/$model_name.yaml ]]; then
-      echo "config exists: $configs/$model_name.yaml"
-      CUDA_VISIBLE_DEVICES=$device OMP_NUM_THREADS=$num_threads python -m joeynmt train $configs/$model_name.yaml
-  fi
+for model_name in word_2k bpe_2k bpe_4k; do
+    mkdir -p $logs/$model_name
 done
 
-echo "time taken:"
-echo "$SECONDS seconds"
+CUDA_VISIBLE_DEVICES=1 OMP_NUM_THREADS=$num_threads python -m joeynmt train $configs/word_2k.yaml > $logs/word_2k/out 2> $logs/word_2k/err &
 
+CUDA_VISIBLE_DEVICES=2 OMP_NUM_THREADS=$num_threads python -m joeynmt train $configs/bpe_2k.yaml > $logs/bpe_2k/out 2> $logs/bpe_2k/err &
+
+CUDA_VISIBLE_DEVICES=3 OMP_NUM_THREADS=$num_threads python -m joeynmt train $configs/bpe_4k.yaml > $logs/bpe_4k/out 2> $logs/bpe_4k/err &
