@@ -23,26 +23,24 @@ device=4
 
 SECONDS=0
 
-model_name=
+model_name=bpe_2k
+
+echo "model_name $model_name"
 
 config=$configs/$model_name.yaml
 
 for beam_size in {1..10}; do
-    cat $config | sed "s/beam_size: 10/beam_size: $beam_size/" > $model_name.$beam_size.yaml
-done
+    cat $config | sed "s/beam_size: 10/beam_size: $beam_size/g" > $model_name.$beam_size.yaml
 
-
-
-for model_name in bpe_2k; do
 
     echo "###############################################################################"
-    echo "model_name $model_name"
+    echo "beam_size $beam_size"
 
-    translations_sub=$translations/$model_name
+    translations_sub=$translations/$model_name.$beam_size
 
     mkdir -p $translations_sub
 
-    CUDA_VISIBLE_DEVICES=$device OMP_NUM_THREADS=$num_threads python -m joeynmt translate $configs/$model_name.yaml < $data/test.bpe1.$src > $translations_sub/test.bpe.$model_name.$trg
+    CUDA_VISIBLE_DEVICES=$device OMP_NUM_THREADS=$num_threads python -m joeynmt translate $model_name.$beam_size.yaml < $data/test.bpe1.$src > $translations_sub/test.bpe.$model_name.$trg
 
     # undo BPE (this does not do anything: https://github.com/joeynmt/joeynmt/issues/91)
 
@@ -57,53 +55,3 @@ for model_name in bpe_2k; do
     cat $translations_sub/test.$model_name.$trg | sacrebleu $data/test.$trg
 
 done
-
-for model_name in bpe_4k; do
-
-    echo "###############################################################################"
-    echo "model_name $model_name"
-
-    translations_sub=$translations/$model_name
-
-    mkdir -p $translations_sub
-
-    CUDA_VISIBLE_DEVICES=$device OMP_NUM_THREADS=$num_threads python -m joeynmt translate $configs/$model_name.yaml < $data/test.bpe2.$src > $translations_sub/test.bpe.$model_name.$trg
-
-    # undo BPE (this does not do anything: https://github.com/joeynmt/joeynmt/issues/91)
-
-    cat $translations_sub/test.bpe.$model_name.$trg | sed 's/\@\@ //g' > $translations_sub/test.tokenized.$model_name.$trg
-
-    # undo tokenization
-
-    cat $translations_sub/test.tokenized.$model_name.$trg | $MOSES/tokenizer/detokenizer.perl -l $trg > $translations_sub/test.$model_name.$trg
-
-    # compute case-sensitive BLEU on detokenized data
-
-    cat $translations_sub/test.$model_name.$trg | sacrebleu $data/test.$trg
-
-done
-
-for model_name in word_2k; do
-
-    echo "###############################################################################"
-    echo "model_name $model_name"
-
-    translations_sub=$translations/$model_name
-
-    mkdir -p $translations_sub
-
-    CUDA_VISIBLE_DEVICES=$device OMP_NUM_THREADS=$num_threads python -m joeynmt translate $configs/$model_name.yaml < $data/test.tokenized.$src > $translations_sub/test.tokenized.$model_name.$trg
-
-    # undo tokenization
-
-    cat $translations_sub/test.tokenized.$model_name.$trg | $MOSES/tokenizer/detokenizer.perl -l $trg > $translations_sub/test.$model_name.$trg
-
-    # compute case-sensitive BLEU on detokenized data
-
-    cat $translations_sub/test.$model_name.$trg | sacrebleu $data/test.$trg
-
-done
-
-echo "time taken:"
-echo "$SECONDS seconds"
-
