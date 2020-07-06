@@ -18,6 +18,7 @@ data:
 testing:
     beam_size: 5
     alpha: 1.0
+    postprocess: False
 
 training:
     random_seed: 42
